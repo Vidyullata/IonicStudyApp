@@ -1,0 +1,123 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Home </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Home</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <section id="keyThemes">
+    <ion-card color="warning">
+      <ion-card-header>
+        <ion-card-title><b>Key Themes</b></ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="ion-margin-bottom">
+          Swami Mukundananda Exclusive is a community to provide knowledge,
+          practical tools and tips addressing entire landscape of your life
+          under five key themes
+        </p>
+        <ion-button
+          id="open-modal"
+          class="ion-margin-top"
+          expand="block"
+          color="light"
+          (click)="onModalOpen()"
+          >View Themes</ion-button
+        >
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <!-- <swiper-container>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-scrollbar"></div>
+    </div>
+  </swiper-container> -->
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col *ngFor="let item of sliderData;let i = index">
+              <ion-progress-bar
+                style="height: 5px; border-radius: 5px"
+                [value]="progressVal[i]"
+              ></ion-progress-bar>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid style="background-color: bisque; border-radius: 10px">
+          <ion-row class="ion-justify-content-between">
+            <button
+              (click)="closeModal()"
+              shape="round"
+              class=""
+              style="
+                width: 25px;
+                height: 25px;
+                background: gray;
+                color: white;
+                border-radius: 5px;
+                margin: 5px;
+              "
+            >
+              <ion-icon name="close" slot="icon-only"></ion-icon>
+            </button>
+            <ion-button size="small"> Join Community </ion-button>
+          </ion-row>
+          <swiper-container
+            #swiper
+            [slidesPerView]="1"
+            [loop]="false"
+            (swiperslidechange)="onSlideChange($event)"
+          >
+            <swiper-slide *ngFor="let item of sliderData">
+              <ion-card>
+                <img
+                  *ngIf="!item.isVideoContent"
+                  [alt]="item.title"
+                  [src]="item.imagePath"
+                />
+                <ion-card-header>
+                  <ion-card-title>{{item.title}}</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                  <span *ngIf="!item.isVideoContent">{{item.description}}</span>
+                  <iframe
+                    #player
+                    *ngIf="item.isVideoContent"
+                    [class.thumbnail]="item.imagePath"
+                    [src]="item.videoUrl"
+                    width="100%"
+                    height="250"
+                    frameborder="0"
+                    webkitallowfullscreen
+                    mozallowfullscreen
+                    allowfullscreen
+                  ></iframe>
+                </ion-card-content>
+              </ion-card>
+            </swiper-slide>
+          </swiper-container>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
